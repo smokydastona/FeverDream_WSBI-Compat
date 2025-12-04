@@ -19,13 +19,13 @@ public class Config {
     static {
         BUILDER.push("Feverdream Respawn Configuration");
         
-        TARGET_SERVER = BUILDER
-            .comment("The name/address of the server to redirect players to on respawn")
-            .define("targetServer", "feverdream");
-        
         BUTTON_INDEX = BUILDER
             .comment("Which WaystoneButtonInjector button to trigger (0-5, where 0 = first button)")
             .defineInRange("buttonIndex", 0, 0, 5);
+        
+        TARGET_SERVER = BUILDER
+            .comment("The name/address of the server to redirect players to on respawn")
+            .define("targetServer", "feverdream");
         
         ENABLE_REDIRECT = BUILDER
             .comment("Master switch - enable or disable all redirect features")
