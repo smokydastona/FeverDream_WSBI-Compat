@@ -24,8 +24,8 @@ public class Config {
             .define("targetServer", "feverdream");
         
         BUTTON_INDEX = BUILDER
-            .comment("Which WaystoneButtonInjector button to trigger (0 = first button, 1 = second button, etc.)")
-            .defineInRange("buttonIndex", 0, 0, 99);
+            .comment("Which WaystoneButtonInjector button to trigger (0-5, where 0 = first button)")
+            .defineInRange("buttonIndex", 0, 0, 5);
         
         ENABLE_REDIRECT = BUILDER
             .comment("Master switch - enable or disable all redirect features")
