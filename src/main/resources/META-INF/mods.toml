@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/smokydastona/FeverdreamRespawn/issues"
+
+[[mods]]
+modId="feverdreamrespawn"
+version="1.0.0"
+displayName="Feverdream Respawn"
+description="Server-side mod that redirects players to another server on respawn"
+authors="smokydastona"
+
+[[dependencies.feverdreamrespawn]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="SERVER"
+
+[[dependencies.feverdreamrespawn]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1]"
+    ordering="NONE"
+    side="SERVER"
