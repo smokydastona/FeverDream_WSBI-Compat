@@ -9,6 +9,7 @@ public class Config {
     public static final ForgeConfigSpec SPEC;
     
     public static final ForgeConfigSpec.IntValue BUTTON_INDEX;
+    public static final ForgeConfigSpec.ConfigValue<String> REDIRECT_PREFIX;
     public static final ForgeConfigSpec.BooleanValue ENABLE_REDIRECT;
     public static final ForgeConfigSpec.BooleanValue SHOW_MESSAGES;
     public static final ForgeConfigSpec.BooleanValue DEATH_MODE_ENABLED;
@@ -19,8 +20,12 @@ public class Config {
         BUILDER.push("Feverdream Respawn Configuration");
         
         BUTTON_INDEX = BUILDER
-            .comment("Which WaystoneButtonInjector button to trigger (0-5, where 0 = first button)")
+            .comment("Which secret button to trigger (0-5 maps to button IDs 6-11 in WaystoneButtonInjector)")
             .defineInRange("buttonIndex", 0, 0, 5);
+        
+        REDIRECT_PREFIX = BUILDER
+            .comment("Prefix for redirect type: 'death' for death-based, 'sleep' for sleep-based, or empty for direct")
+            .define("redirectPrefix", "death");
         
         ENABLE_REDIRECT = BUILDER
             .comment("Master switch - enable or disable all redirect features")
