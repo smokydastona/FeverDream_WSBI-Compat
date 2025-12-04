@@ -27,8 +27,8 @@ public class FeverdreamRespawn {
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
         new ResourceLocation(MODID, "main"),
         () -> PROTOCOL_VERSION,
-        version -> true,  // Accept any version from client (optional on client)
-        version -> true   // Accept any version from server
+        PROTOCOL_VERSION::equals,  // Must match client version exactly
+        PROTOCOL_VERSION::equals   // Must match server version exactly
     );
     
     // Track player deaths
