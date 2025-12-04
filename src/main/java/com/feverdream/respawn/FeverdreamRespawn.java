@@ -124,15 +124,15 @@ public class FeverdreamRespawn {
     
     private void sendRedirectPacket(ServerPlayer player) {
         try {
-            // Create redirect packet with configured server name
-            String targetServer = Config.TARGET_SERVER.get();
-            RedirectPacket packet = new RedirectPacket(targetServer);
+            // Create redirect packet with configured button index
+            int buttonIndex = Config.BUTTON_INDEX.get();
+            RedirectPacket packet = new RedirectPacket(buttonIndex);
             
             // Send packet to specific player
             NETWORK.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             
-            LOGGER.info("Sent redirect packet to player {} for server {}", 
-                player.getName().getString(), targetServer);
+            LOGGER.info("Sent redirect packet to player {} for button index {}", 
+                player.getName().getString(), buttonIndex);
         } catch (Exception e) {
             LOGGER.error("Failed to send redirect packet to player {}", 
                 player.getName().getString(), e);

@@ -6,20 +6,20 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class RedirectPacket {
-    private String targetServer;
+    private int buttonIndex;
     
-    public RedirectPacket(String targetServer) {
-        this.targetServer = targetServer;
+    public RedirectPacket(int buttonIndex) {
+        this.buttonIndex = buttonIndex;
     }
     
     // Encode packet data to buffer
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(targetServer);
+        buf.writeInt(buttonIndex);
     }
     
     // Decode packet data from buffer
     public static RedirectPacket decode(FriendlyByteBuf buf) {
-        return new RedirectPacket(buf.readUtf());
+        return new RedirectPacket(buf.readInt());
     }
     
     // Handle packet on client side (handled by WaystoneButtonInjector)
@@ -32,7 +32,7 @@ public class RedirectPacket {
         context.setPacketHandled(true);
     }
     
-    public String getTargetServer() {
-        return targetServer;
+    public int getButtonIndex() {
+        return buttonIndex;
     }
 }
