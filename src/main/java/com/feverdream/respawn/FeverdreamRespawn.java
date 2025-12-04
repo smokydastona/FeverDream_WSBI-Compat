@@ -128,16 +128,11 @@ public class FeverdreamRespawn {
             int buttonIndex = Config.BUTTON_INDEX.get();
             int secretButtonId = buttonIndex + 6; // 0->6, 1->7, ..., 5->11
             
-            // Get prefix (death, sleep, or empty)
+            // Get prefix (death or sleep)
             String prefix = Config.REDIRECT_PREFIX.get();
             
-            // Format: "prefix:buttonId" or just "buttonId" if no prefix
-            String serverName;
-            if (prefix != null && !prefix.isEmpty()) {
-                serverName = prefix +":" + secretButtonId;
-            } else {
-                serverName = String.valueOf(secretButtonId);
-            }
+            // Format: "prefix:buttonId" (e.g., "death:6" or "sleep:7")
+            String serverName = prefix + ":" + secretButtonId;
             
             RedirectPacket packet = new RedirectPacket(serverName);
             

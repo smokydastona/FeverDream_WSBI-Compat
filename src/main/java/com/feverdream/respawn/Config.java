@@ -24,7 +24,7 @@ public class Config {
             .defineInRange("buttonIndex", 0, 0, 5);
         
         REDIRECT_PREFIX = BUILDER
-            .comment("Prefix for redirect type: 'death' for death-based, 'sleep' for sleep-based, or empty for direct")
+            .comment("Prefix for redirect type: 'death' for death-based redirects, 'sleep' for sleep-based redirects")
             .define("redirectPrefix", "death");
         
         ENABLE_REDIRECT = BUILDER
