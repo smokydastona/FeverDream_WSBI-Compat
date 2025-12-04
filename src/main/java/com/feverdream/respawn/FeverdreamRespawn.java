@@ -36,6 +36,9 @@ public class FeverdreamRespawn {
     public FeverdreamRespawn() {
         MinecraftForge.EVENT_BUS.register(this);
         
+        // Register config
+        Config.register();
+        
         // Register packet
         NETWORK.registerMessage(0, RedirectPacket.class, 
             RedirectPacket::encode, 
@@ -59,8 +62,8 @@ public class FeverdreamRespawn {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             UUID playerUUID = serverPlayer.getUUID();
             
-            // Check if this respawn was from a death
-            if (playerDeathMap.getOrDefault(playerUUID, false)) {
+            // Check if this respawn was from a death and redirect is enabled
+            if (Config.ENABLE_REDIRECT.get() && playerDeathMap.getOrDefault(playerUUID, false)) {
                 LOGGER.info("Player {} respawned after death, sending redirect packet", 
                     serverPlayer.getName().getString());
                 
@@ -81,13 +84,15 @@ public class FeverdreamRespawn {
     
     private void sendRedirectPacket(ServerPlayer player) {
         try {
-            // Create redirect packet - this will be sent to WaystoneButtonInjector client mod
-            RedirectPacket packet = new RedirectPacket();
+            // Create redirect packet with configured server name
+            String targetServer = Config.TARGET_SERVER.get();
+            RedirectPacket packet = new RedirectPacket(targetServer);
             
             // Send packet to specific player
             NETWORK.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             
-            LOGGER.info("Sent redirect packet to player {}", player.getName().getString());
+            LOGGER.info("Sent redirect packet to player {} for server {}", 
+                player.getName().getString(), targetServer);
         } catch (Exception e) {
             LOGGER.error("Failed to send redirect packet to player {}", 
                 player.getName().getString(), e);

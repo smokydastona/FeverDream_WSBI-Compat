@@ -6,13 +6,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class RedirectPacket {
-    // You can add data here if you want to specify different servers
-    // For now, it's a simple trigger packet
     private String targetServer;
-    
-    public RedirectPacket() {
-        this.targetServer = "feverdream"; // Default server name
-    }
     
     public RedirectPacket(String targetServer) {
         this.targetServer = targetServer;
