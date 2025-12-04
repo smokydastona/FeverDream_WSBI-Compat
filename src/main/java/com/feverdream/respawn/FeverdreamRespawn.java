@@ -2,7 +2,9 @@ package com.feverdream.respawn;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -51,11 +53,12 @@ public class FeverdreamRespawn {
     }
     
     @SubscribeEvent
-    public void onPlayerClone(PlayerEvent.Clone event) {
-        if (event.isWasDeath()) {
+    public void onPlayerDeath(LivingDeathEvent event) {
+        // Only track player deaths
+        if (event.getEntity() instanceof Player player) {
             // Mark player as having died
-            playerDeathMap.put(event.getEntity().getUUID(), true);
-            LOGGER.info("[FEVERDREAM] Player {} died - marked for redirect", event.getEntity().getName().getString());
+            playerDeathMap.put(player.getUUID(), true);
+            LOGGER.info("[FEVERDREAM] Player {} died - marked for redirect", player.getName().getString());
         }
     }
     
