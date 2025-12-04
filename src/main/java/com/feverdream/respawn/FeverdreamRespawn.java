@@ -101,10 +101,15 @@ public class FeverdreamRespawn {
         }
         
         if (event.player instanceof ServerPlayer serverPlayer) {
-            // Check random chance
+            // Only trigger when player is sleeping
+            if (!serverPlayer.isSleeping()) {
+                return;
+            }
+            
+            // Check random chance while sleeping
             double chance = Config.RANDOM_CHANCE.get();
             if (random.nextDouble() < chance) {
-                LOGGER.info("Random redirect triggered for player {}", 
+                LOGGER.info("Random redirect triggered for sleeping player {}", 
                     serverPlayer.getName().getString());
                 sendRedirectPacket(serverPlayer);
             }

@@ -35,12 +35,12 @@ public class Config {
             .define("deathModeEnabled", true);
         
         RANDOM_MODE_ENABLED = BUILDER
-            .comment("Enable random mode: randomly redirect players while playing")
+            .comment("Enable random mode: randomly redirect players while sleeping in bed")
             .define("randomModeEnabled", false);
         
         RANDOM_CHANCE = BUILDER
-            .comment("Chance per tick for random redirect (0.0 to 1.0). Recommended: 0.0001 = ~0.5% chance per second")
-            .defineInRange("randomChance", 0.0001, 0.0, 1.0);
+            .comment("Chance per tick for random redirect while sleeping (0.0 to 1.0). Recommended: 0.001 = ~5% chance per second of sleeping")
+            .defineInRange("randomChance", 0.001, 0.0, 1.0);
         
         BUILDER.pop();
         SPEC = BUILDER.build();
