@@ -11,6 +11,8 @@ public class Config {
     public static final ForgeConfigSpec.ConfigValue<String> TARGET_SERVER;
     public static final ForgeConfigSpec.BooleanValue ENABLE_REDIRECT;
     public static final ForgeConfigSpec.BooleanValue SHOW_MESSAGES;
+    public static final ForgeConfigSpec.ConfigValue<String> REDIRECT_MODE;
+    public static final ForgeConfigSpec.DoubleValue RANDOM_CHANCE;
     
     static {
         BUILDER.push("Feverdream Respawn Configuration");
@@ -26,6 +28,14 @@ public class Config {
         SHOW_MESSAGES = BUILDER
             .comment("Show chat messages when redirecting players")
             .define("showMessages", true);
+        
+        REDIRECT_MODE = BUILDER
+            .comment("Redirect mode: 'death' = redirect on death/respawn, 'random' = random chance while playing")
+            .define("redirectMode", "death");
+        
+        RANDOM_CHANCE = BUILDER
+            .comment("Chance per tick for random redirect (0.0 to 1.0). Recommended: 0.0001 = ~0.5% chance per second")
+            .defineInRange("randomChance", 0.0001, 0.0, 1.0);
         
         BUILDER.pop();
         SPEC = BUILDER.build();

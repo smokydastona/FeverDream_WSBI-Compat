@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 @Mod(FeverdreamRespawn.MODID)
@@ -32,6 +33,7 @@ public class FeverdreamRespawn {
     
     // Track player deaths
     private static final Map<UUID, Boolean> playerDeathMap = new HashMap<>();
+    private static final Random random = new Random();
     
     public FeverdreamRespawn() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -59,6 +61,11 @@ public class FeverdreamRespawn {
     
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        // Only process death mode redirects
+        if (!"death".equalsIgnoreCase(Config.REDIRECT_MODE.get())) {
+            return;
+        }
+        
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             UUID playerUUID = serverPlayer.getUUID();
             
@@ -72,6 +79,38 @@ public class FeverdreamRespawn {
                 
                 // Clear death flag
                 playerDeathMap.put(playerUUID, false);
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public void onPlayerTick(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
+        // Only process random mode redirects
+        if (!"random".equalsIgnoreCase(Config.REDIRECT_MODE.get())) {
+            return;
+        }
+        
+        if (!Config.ENABLE_REDIRECT.get()) {
+            return;
+        }
+        
+        // Only check on server side
+        if (event.side.isClient()) {
+            return;
+        }
+        
+        // Only check during the start phase to avoid double-checking
+        if (event.phase != net.minecraftforge.event.TickEvent.Phase.START) {
+            return;
+        }
+        
+        if (event.player instanceof ServerPlayer serverPlayer) {
+            // Check random chance
+            double chance = Config.RANDOM_CHANCE.get();
+            if (random.nextDouble() < chance) {
+                LOGGER.info("Random redirect triggered for player {}", 
+                    serverPlayer.getName().getString());
+                sendRedirectPacket(serverPlayer);
             }
         }
     }
