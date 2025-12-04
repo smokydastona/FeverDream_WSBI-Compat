@@ -61,16 +61,16 @@ public class FeverdreamRespawn {
     
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        // Only process death mode redirects
-        if (!"death".equalsIgnoreCase(Config.REDIRECT_MODE.get())) {
+        // Check if death mode is enabled
+        if (!Config.ENABLE_REDIRECT.get() || !Config.DEATH_MODE_ENABLED.get()) {
             return;
         }
         
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             UUID playerUUID = serverPlayer.getUUID();
             
-            // Check if this respawn was from a death and redirect is enabled
-            if (Config.ENABLE_REDIRECT.get() && playerDeathMap.getOrDefault(playerUUID, false)) {
+            // Check if this respawn was from a death
+            if (playerDeathMap.getOrDefault(playerUUID, false)) {
                 LOGGER.info("Player {} respawned after death, sending redirect packet", 
                     serverPlayer.getName().getString());
                 
@@ -85,12 +85,8 @@ public class FeverdreamRespawn {
     
     @SubscribeEvent
     public void onPlayerTick(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {
-        // Only process random mode redirects
-        if (!"random".equalsIgnoreCase(Config.REDIRECT_MODE.get())) {
-            return;
-        }
-        
-        if (!Config.ENABLE_REDIRECT.get()) {
+        // Check if random mode is enabled
+        if (!Config.ENABLE_REDIRECT.get() || !Config.RANDOM_MODE_ENABLED.get()) {
             return;
         }
         

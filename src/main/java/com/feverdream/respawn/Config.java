@@ -11,7 +11,8 @@ public class Config {
     public static final ForgeConfigSpec.ConfigValue<String> TARGET_SERVER;
     public static final ForgeConfigSpec.BooleanValue ENABLE_REDIRECT;
     public static final ForgeConfigSpec.BooleanValue SHOW_MESSAGES;
-    public static final ForgeConfigSpec.ConfigValue<String> REDIRECT_MODE;
+    public static final ForgeConfigSpec.BooleanValue DEATH_MODE_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue RANDOM_MODE_ENABLED;
     public static final ForgeConfigSpec.DoubleValue RANDOM_CHANCE;
     
     static {
@@ -22,16 +23,20 @@ public class Config {
             .define("targetServer", "feverdream");
         
         ENABLE_REDIRECT = BUILDER
-            .comment("Enable or disable the respawn redirect feature")
+            .comment("Master switch - enable or disable all redirect features")
             .define("enableRedirect", true);
         
         SHOW_MESSAGES = BUILDER
             .comment("Show chat messages when redirecting players")
             .define("showMessages", true);
         
-        REDIRECT_MODE = BUILDER
-            .comment("Redirect mode: 'death' = redirect on death/respawn, 'random' = random chance while playing")
-            .define("redirectMode", "death");
+        DEATH_MODE_ENABLED = BUILDER
+            .comment("Enable death mode: redirect players on respawn after death")
+            .define("deathModeEnabled", true);
+        
+        RANDOM_MODE_ENABLED = BUILDER
+            .comment("Enable random mode: randomly redirect players while playing")
+            .define("randomModeEnabled", false);
         
         RANDOM_CHANCE = BUILDER
             .comment("Chance per tick for random redirect (0.0 to 1.0). Recommended: 0.0001 = ~0.5% chance per second")
