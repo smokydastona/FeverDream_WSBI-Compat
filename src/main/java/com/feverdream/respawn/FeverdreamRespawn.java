@@ -55,7 +55,7 @@ public class FeverdreamRespawn {
         if (event.isWasDeath()) {
             // Mark player as having died
             playerDeathMap.put(event.getEntity().getUUID(), true);
-            LOGGER.debug("Player {} died", event.getEntity().getName().getString());
+            LOGGER.info("[FEVERDREAM] Player {} died - marked for redirect", event.getEntity().getName().getString());
         }
     }
     
@@ -63,6 +63,8 @@ public class FeverdreamRespawn {
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         // Check if death mode is enabled
         if (!Config.ENABLE_REDIRECT.get() || !Config.DEATH_MODE_ENABLED.get()) {
+            LOGGER.info("[FEVERDREAM] Player respawned but death mode disabled (redirect={}, deathMode={})", 
+                Config.ENABLE_REDIRECT.get(), Config.DEATH_MODE_ENABLED.get());
             return;
         }
         
@@ -71,7 +73,7 @@ public class FeverdreamRespawn {
             
             // Check if this respawn was from a death
             if (playerDeathMap.getOrDefault(playerUUID, false)) {
-                LOGGER.info("Player {} respawned after death, sending redirect packet", 
+                LOGGER.info("[FEVERDREAM] Player {} respawned after death, sending redirect packet", 
                     serverPlayer.getName().getString());
                 
                 // Send packet to client mod to trigger server redirect
@@ -79,6 +81,9 @@ public class FeverdreamRespawn {
                 
                 // Clear death flag
                 playerDeathMap.put(playerUUID, false);
+            } else {
+                LOGGER.info("[FEVERDREAM] Player {} respawned but wasn't marked as dead", 
+                    serverPlayer.getName().getString());
             }
         }
     }
@@ -139,7 +144,7 @@ public class FeverdreamRespawn {
             // Send packet to specific player
             NETWORK.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             
-            LOGGER.info("Sent redirect packet to player {} with data: {}", 
+            LOGGER.info("[FEVERDREAM] Sent redirect packet to player {} with data: {}", 
                 player.getName().getString(), serverName);
         } catch (Exception e) {
             LOGGER.error("Failed to send redirect packet to player {}", 
