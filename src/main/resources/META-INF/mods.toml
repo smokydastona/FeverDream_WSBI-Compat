@@ -10,6 +10,9 @@ displayName="Feverdream Respawn"
 description="Server-side mod that redirects players to another server on respawn"
 authors="smokydastona"
 
+[[mods.feverdreamrespawn.modproperties]]
+    displayTest="IGNORE_SERVER_VERSION"
+
 [[dependencies.feverdreamrespawn]]
     modId="forge"
     mandatory=true
