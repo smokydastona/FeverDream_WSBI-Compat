@@ -8,7 +8,6 @@ public class Config {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
     
-    public static final ForgeConfigSpec.ConfigValue<String> TARGET_SERVER;
     public static final ForgeConfigSpec.IntValue BUTTON_INDEX;
     public static final ForgeConfigSpec.BooleanValue ENABLE_REDIRECT;
     public static final ForgeConfigSpec.BooleanValue SHOW_MESSAGES;
@@ -22,10 +21,6 @@ public class Config {
         BUTTON_INDEX = BUILDER
             .comment("Which WaystoneButtonInjector button to trigger (0-5, where 0 = first button)")
             .defineInRange("buttonIndex", 0, 0, 5);
-        
-        TARGET_SERVER = BUILDER
-            .comment("The name/address of the server to redirect players to on respawn")
-            .define("targetServer", "feverdream");
         
         ENABLE_REDIRECT = BUILDER
             .comment("Master switch - enable or disable all redirect features")
